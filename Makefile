@@ -1,17 +1,21 @@
 CC=gcc
 BIN=cacher
 SRC=$(wildcard *.c)
+OBJ=$(SRC:.c=.o)
 CFLAGS=-std=c99 -O3
 LFLAGS=
 
 all: $(BIN)
 
-$(BIN): $(SRC)
-	$(CC) $(CFLAGS) $(LFLAGS) -o $(BIN) $(SRC)
+$(BIN): $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 # zip project directory using the scheme
 # yourFirstName-yourLastName.zip
 zip:
 	git archive --format zip master -o Abdullah-Badahdah.zip
 
-clean:; @rm $(BIN)
+clean:; @rm $(OBJ) $(BIN)

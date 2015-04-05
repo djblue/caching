@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "map.h"
+
 // represents expected command line arguments
 typedef struct {
   int c;        // cache size in number of pages
@@ -88,11 +90,17 @@ int next_line (FILE *f, trace_line *l) {
 //   else
 //     replace lru_item with item
 
-// run lru trace
+// keep map of address to cache location O(c)
+//   [addr] -> cache
+
+// run trace through lru algorithm
+// NOTE: assume that the cache is fully-associative
+//   - any item can be in any cache location
 void lru (input* in) {
   trace_line l;
   int hit = 0, requests = 0;
   while (next_line(in->trace, &l)) {
+    
     requests += l.number_of_blocks;
   }
   printf("requests: %d\n", requests);
