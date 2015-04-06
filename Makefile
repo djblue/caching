@@ -2,6 +2,7 @@ CC=gcc
 BIN=cacher
 SRC=$(wildcard *.c)
 OBJ=$(SRC:.c=.o)
+#CFLAGS=-std=c99 -g
 CFLAGS=-std=c99 -O3
 LFLAGS=
 
