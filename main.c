@@ -83,19 +83,19 @@ int next_line (FILE *f, trace_line *l) {
 }
 
 
-// run trace through lru algorithm
+// run trace through various algorithm
 // NOTE: assume that the cache is fully-associative
 //   - any item can be in any cache location
-void lru_trace (input* in) {
+void trace (input* in) {
 
   trace_line l;
   int lines = 0;
-  cache *c = cache_create(in->c);
+  cache *lru = cache_create(in->c);
 
   while (next_line(in->trace, &l)) {
     int n = l.starting_block + l.number_of_blocks;
     for (int i = l.starting_block; i < n; i++) {
-      cache_lru_get(c, i);
+      cache_lru_get(lru, i);
     }
     lines++;
     if (lines % 100000 == 0) {
@@ -104,8 +104,9 @@ void lru_trace (input* in) {
     }
   }
 
-  cache_print_stats(c);
-  cache_free(c);
+  printf("file: %s, capacity: %d, algo: lru, ", in->fname, in->c);
+  cache_print_stats(lru);
+  cache_free(lru);
 }
 
 int main (int argc, char **argv) {
@@ -113,6 +114,6 @@ int main (int argc, char **argv) {
   if (parse_args(argc, argv, &in)) {
     return 1;
   }
-  lru_trace(&in);
+  trace(&in);
   fclose(in.trace);
 }

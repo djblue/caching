@@ -1,0 +1,9 @@
+file: ./traces/P1.lis, capacity: 32768, algo: lru, requests: 32055473, hits: 5305513, ratio: 16.55
+file: ./traces/P2.lis, capacity: 32768, algo: lru, requests: 12729495, hits: 2350757, ratio: 18.47
+file: ./traces/P3.lis, capacity: 32768, algo: lru, requests:  3912296, hits:  139485, ratio: 3.57
+file: ./traces/P4.lis, capacity: 32768, algo: lru, requests: 19776090, hits: 1036143, ratio: 5.24
+file: ./traces/P5.lis, capacity: 32768, algo: lru, requests: 22937097, hits: 1543064, ratio: 6.73
+file: ./traces/P6.lis, capacity: 32768, algo: lru, requests: 12672123, hits:  537345, ratio: 4.24
+file: ./traces/P7.lis, capacity: 32768, algo: lru, requests: 14521148, hits:  501036, ratio: 3.45
+file: ./traces/P12.lis, capacity: 32768, algo: lru, requests: 13208930, hits: 1179069, ratio: 8.93
+

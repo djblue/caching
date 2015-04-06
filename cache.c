@@ -55,11 +55,9 @@ void cache_free (cache *c) {
 
 void cache_print_stats(cache *c) {
   printf(
-    "{ "
-    "requests: %d, "
-    "hits: %d, "
-    "ratio: %0.2f"
-    " }\n",
+    "requests: %8d, "
+    "hits: %7d, "
+    "ratio: %4.2f\n",
     c->requests,
     c->hits,
     c->hits*100/(float)c->requests
