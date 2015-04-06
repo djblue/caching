@@ -16,6 +16,11 @@ To run all the tests, do:
 
     make test
 
+If the tests are taking too long to run, and you want to run them in
+parallel, do:
+
+    make test -j
+
 ## Input
 
 Sample input is in the `trace` directory. The format is:

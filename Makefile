@@ -4,7 +4,6 @@ SRC=$(wildcard *.c)
 OBJ=$(SRC:.c=.o)
 CFLAGS=-std=c99 -O3
 LFLAGS=
-TIME=/usr/bin/time
 
 all: $(BIN)
 
@@ -21,14 +20,9 @@ zip:
 
 .PHONY: clean zip test
 
-test: $(BIN)
-	@./$(BIN) 32768 ./traces/P1.lis
-	@./$(BIN) 32768 ./traces/P2.lis
-	@./$(BIN) 32768 ./traces/P3.lis
-	@./$(BIN) 32768 ./traces/P4.lis
-	@./$(BIN) 32768 ./traces/P5.lis
-	@./$(BIN) 32768 ./traces/P6.lis
-	@./$(BIN) 32768 ./traces/P7.lis
-	@./$(BIN) 32768 ./traces/P12.lis
+test: P1 P2 P3 P4 P5 P6 P7 P12
+
+P%: $(BIN)
+	@./$(BIN) 32768 ./traces/P$*.lis
 
 clean:; @rm $(OBJ) $(BIN)
