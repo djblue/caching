@@ -16,9 +16,30 @@ To run all the tests, do:
 
     make test
 
+## Input
+
+Sample input is in the `trace` directory. The format is:
+
+- starting block: the starting block of the cache request.
+- number of blocks: the number of blocks starting from the starting block.
+  This simulates the concept of locality.
+- ignore
+- request number: The request number; think line counter.
+
+Theses fields are reflected in the `trace_line` struct in `main.c`.
+
+```c
+typedef struct {
+  int starting_block;
+  int number_of_blocks;
+  int ignore;
+  int request_number;
+} trace_line;
+```
+
 ## Output
 
-A sample output file is included `output.txt`. The format is
+A sample output file is included `output.txt`. The format is:
 
 - file: the trace file used to generate the line of output.
 - capacity: the capacity of the cache in pages; ex: `32768 = (16*1024*1024)/512`.
