@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "cache.h"
 
 // represents expected command line arguments
 typedef struct {
   int c;        // cache size in number of pages
+  char fname[1024];
   FILE *trace;  // trace file
 } input;
 
@@ -53,6 +55,7 @@ int parse_args (int argc, char **argv, input* in) {
     printf("Error: \"%s\" is not a valid path\n", argv[2]);
     return usage(argv[0]);
   }
+  strcpy(in->fname, argv[2]);
 
   // made it this far, congrats!
   return 0;
@@ -96,7 +99,8 @@ void lru_trace (input* in) {
     }
     lines++;
     if (lines % 100000 == 0) {
-      printf("processed %d lines\n", lines);
+      fprintf(stderr, "%s: processed %d lines\r", in->fname, lines);
+      fflush(stderr);
     }
   }
 
