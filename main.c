@@ -90,12 +90,15 @@ void trace (input* in) {
 
   trace_line l;
   int lines = 0;
+
   cache *lru = cache_create(in->c);
+  cache *arc = cache_create(in->c);
 
   while (next_line(in->trace, &l)) {
     int n = l.starting_block + l.number_of_blocks;
     for (int i = l.starting_block; i < n; i++) {
       cache_lru_get(lru, i);
+      cache_arc_get(arc, i);
     }
     lines++;
     if (lines % 100000 == 0) {
@@ -106,7 +109,11 @@ void trace (input* in) {
 
   printf("file: %s, capacity: %d, algo: lru, ", in->fname, in->c);
   cache_print_stats(lru);
+  printf("file: %s, capacity: %d, algo: arc, ", in->fname, in->c);
+  cache_print_stats(arc);
+
   cache_free(lru);
+  cache_free(arc);
 }
 
 int main (int argc, char **argv) {

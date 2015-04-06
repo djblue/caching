@@ -47,6 +47,10 @@ void cache_lru_get(cache *c, int addr) {
 
 }
 
+void cache_arc_get(cache *c, int addr) {
+  c->requests++;
+}
+
 void cache_free (cache *c) {
   list_free(c->l);
   map_free(c->pages);
