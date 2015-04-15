@@ -3,16 +3,19 @@
 
 #include <stdlib.h>
 
+struct list;
+
 typedef struct page {
   struct page *next;
   struct page *prev;
+  struct list *l;
   int addr;
 } page;
 
 page *page_create (int addr);
 void page_free (page *p);
 
-typedef struct {
+typedef struct list {
   page *head;
   page *tail;
   size_t size;

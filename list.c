@@ -5,6 +5,7 @@ page *page_create (int addr) {
   p->addr = addr;
   p->next = NULL;
   p->prev = NULL;
+  p->l = NULL;
   return p;
 }
 
@@ -46,6 +47,8 @@ page *list_remove (list *l, page *p) {
     p->next->prev = p->prev;
   }
 
+  p->l = NULL;
+
   l->size--;
 
   return p;
@@ -67,6 +70,8 @@ void list_push_front (list *l, page *p) {
     l->head = p;
     p->prev = NULL;
   }
+
+  p->l = l;
 
   l->size++;
 }
