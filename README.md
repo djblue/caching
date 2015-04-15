@@ -67,6 +67,13 @@ linear search time. To improves search, I used a map (implemented in
 `map.h` and `map.c`) to have practically constant time search of the
 linked list.
 
+The following image summarizes the results from the lru simulation:
+
+<img src="plot.png" />
+
+For all of the provided trace files, as the size of the cache increases, The hit
+rate also increases. However, it does so at a decreasing rate.
+
 ### ACR
 
 TODO...
