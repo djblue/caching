@@ -60,7 +60,12 @@ implemented in this project.
 
 ### LRU
 
-
+To calculate the lru for the input trace files, I needed to maintain an
+ordering of the recently accessed pages. To do this I used a doubly linked
+list (implemented in `list.h` and `list.c`). However, a linked list has
+linear search time. To improves search, I used a map (implemented in
+`map.h` and `map.c`) to have practically constant time search of the
+linked list.
 
 ### ACR
 
