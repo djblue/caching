@@ -23,6 +23,15 @@ zip:
 test: P1 P2 P3 P4 P5 P6 P7 P12
 
 P%: $(BIN)
-	@./$(BIN) 32768 ./traces/P$*.lis
+	@./$(BIN) 1024 		./traces/P$*.lis
+	@./$(BIN) 2048 		./traces/P$*.lis
+	@./$(BIN) 4096 		./traces/P$*.lis
+	@./$(BIN) 8192 		./traces/P$*.lis
+	@./$(BIN) 16384 	./traces/P$*.lis
+	@./$(BIN) 32768 	./traces/P$*.lis
+	@./$(BIN) 65536 	./traces/P$*.lis
+	@./$(BIN) 131072 	./traces/P$*.lis
+	@./$(BIN) 262144 	./traces/P$*.lis
+	@./$(BIN) 524288 	./traces/P$*.lis
 
 clean:; @rm $(OBJ) $(BIN)

@@ -8,12 +8,19 @@
 
 typedef struct {
 
+  // for lru
   list *l;
+
+  // for acr
+  list *l1, *l2;
+  map *ghosts;
+  int p;
+
   size_t capacity;
 
   map *pages;
-  int requests;
-  int hits;
+  unsigned long requests;
+  unsigned long hits;
 
 } cache;
 

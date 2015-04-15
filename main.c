@@ -102,14 +102,14 @@ void trace (input* in) {
     }
     lines++;
     if (lines % 100000 == 0) {
-      fprintf(stderr, "%s: processed %d lines\r", in->fname, lines);
+      fprintf(stderr, "%s(c=%d): processed %d lines\r", in->fname, in->c, lines);
       fflush(stderr);
     }
   }
 
-  printf("file: %s, capacity: %d, algo: lru, ", in->fname, in->c);
+  printf("file: %17s, capacity: %6d, algo: lru, ", in->fname, in->c);
   cache_print_stats(lru);
-  printf("file: %s, capacity: %d, algo: arc, ", in->fname, in->c);
+  printf("file: %17s, capacity: %6d, algo: arc, ", in->fname, in->c);
   cache_print_stats(arc);
 
   cache_free(lru);
