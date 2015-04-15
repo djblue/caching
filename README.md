@@ -21,6 +21,8 @@ parallel, do:
 
     make test -j
 
+The tests completed in about 2 minutes on `general.asu.edu`.
+
 ## Input
 
 Sample input is in the `trace` directory. The format is:
