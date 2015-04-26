@@ -16,8 +16,7 @@ typedef struct {
 
 typedef struct {
   list *t1, *t2, *b1, *b2;
-  map *ghosts;
-  map *pages;
+  map *ghosts, *pages;
   int p;
   size_t capacity;
 } cache_arc;
@@ -30,19 +29,6 @@ typedef struct {
     cache_lru *lru;
     cache_arc *arc;
   } data;
-
-  // for lru
-  /*
-  list *l;
-  map *pages;
-  */
-
-  // for acr
-  /*
-  list *t1, *t2, *b1, *b2;
-  map *ghosts;
-  int p;
-  */
 
   unsigned long requests;
   unsigned long hits;
