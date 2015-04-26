@@ -2,67 +2,86 @@
 
 #include <stdio.h>
 
-cache *cache_create (int capacity) {
+cache_lru *cache_lru_create (int capacity) {
+  cache_lru *lru = malloc(sizeof(cache_lru));
+
+  lru->l = list_create();
+  lru->pages = map_create_n(capacity);
+  lru->capacity = capacity;
+
+  return lru;
+}
+
+cache_arc *cache_arc_create (int capacity) {
+  cache_arc *arc = malloc(sizeof(cache_arc));
+
+  arc->t1 = list_create();
+  arc->t2 = list_create();
+  arc->b1 = list_create();
+  arc->b2 = list_create();
+
+  arc->pages = map_create_n(capacity);
+  arc->ghosts = map_create_n(capacity);
+
+  arc->p = 0;
+  arc->capacity = capacity;
+
+  return arc;
+}
+
+cache *cache_create (cache_type t, int capacity) {
   cache *c = malloc(sizeof(cache));
 
-  // lru
-  c->l = list_create();
+  c->t = t;
 
-  // acr
-  c->l1 = list_create();
-  c->l2 = list_create();
-  c->ghosts = map_create_n(capacity);
-  c->p = 0;
+  switch (t) {
+    case LRU:
+      c->data.lru = cache_lru_create(capacity);
+      break;
+    case ARC:
+      c->data.arc = cache_arc_create(capacity);
+      break;
+  }
 
-  c->capacity = capacity;
-
-  c->pages = map_create_n(capacity);
   c->requests = 0;
   c->hits = 0;
 
   return c;
 }
 
-void cache_lru_get(cache *c, int addr) {
 
-  c->requests++;
+int cache_lru_get(cache_lru *lru, int addr) {
 
   // is page already in cache
-  if (map_has(c->pages, addr)) {
+  if (map_has(lru->pages, addr)) {
 
-    page *p = map_get(c->pages, addr);
+    page *p = map_get(lru->pages, addr);
 
-    list_remove(c->l, p);
-    list_push_front(c->l, p);
+    list_remove(lru->l, p);
+    list_push_front(lru->l, p);
 
-    c->hits++;
-
-  } else {
-
-    page *p = page_create(addr);
-    map_set(c->pages, addr, p);
-
-    list_push_front(c->l, p);
-
-    // is the cache not full
-    if (c->l->size > c->capacity) {
-      page *victim = list_pop_back(c->l);
-      map_unset(c->pages, victim->addr);
-      page_free(victim);
-    }
-
+    return 1;
   }
 
+  page *p = page_create(addr);
+  map_set(lru->pages, addr, p);
+
+  list_push_front(lru->l, p);
+
+  // is the cache not full
+  if (lru->l->size > lru->capacity) {
+    page *victim = list_pop_back(lru->l);
+    map_unset(lru->pages, victim->addr);
+    page_free(victim);
+  }
+
+  return 0;
+
 }
 
-enum arc_position { T1, B1, T2,  B2 };
 
-void cache_arc_replace (cache *c, page *p) {
-}
-
-void cache_arc_get(cache *c, int addr) {
-  c->requests++;
-
+int cache_arc_get(cache_arc *arc, int addr) {
+  /*
   // is page already in cache
   if (map_has(c->pages, addr)) {
     page *p = map_get(c->pages, addr);
@@ -84,15 +103,53 @@ void cache_arc_get(cache *c, int addr) {
     map_set(c->pages, addr, p);
   } else {
   }
+  */
 
 }
 
+void cache_get(cache *c, int addr) {
+  c->requests++;
+  int res = 0;
+  switch (c->t) {
+    case LRU:
+      res = cache_lru_get(c->data.lru, addr);
+      break;
+    case ARC:
+      res = cache_arc_get(c->data.arc, addr);
+      break;
+  }
+  if (res == 1) {
+    c->hits++;
+  }
+}
+
+void cache_lru_free (cache_lru *lru) {
+  list_free(lru->l);
+  map_free(lru->pages);
+  free(lru);
+}
+
+void cache_arc_free (cache_arc *arc) {
+  list_free(arc->t1);
+  list_free(arc->t2);
+  list_free(arc->b1);
+  list_free(arc->b2);
+
+  map_free(arc->pages);
+  map_free(arc->ghosts);
+
+  free(arc);
+}
+
 void cache_free (cache *c) {
-  list_free(c->l);
-  list_free(c->l1);
-  list_free(c->l2);
-  map_free(c->ghosts);
-  map_free(c->pages);
+  switch (c->t) {
+    case LRU:
+      cache_lru_free(c->data.lru);
+      break;
+    case ARC:
+      cache_arc_free(c->data.arc);
+      break;
+  }
   free(c);
 }
 
@@ -106,3 +163,4 @@ void cache_print_stats(cache *c) {
     c->hits*100/(float)c->requests
   );
 }
+

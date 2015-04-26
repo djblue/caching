@@ -91,14 +91,14 @@ void trace (input* in) {
   trace_line l;
   int lines = 0;
 
-  cache *lru = cache_create(in->c);
-  cache *arc = cache_create(in->c);
+  cache *lru = cache_create(LRU, in->c);
+  cache *arc = cache_create(ARC, in->c);
 
   while (next_line(in->trace, &l)) {
     int n = l.starting_block + l.number_of_blocks;
     for (int i = l.starting_block; i < n; i++) {
-      cache_lru_get(lru, i);
-      cache_arc_get(arc, i);
+      cache_get(lru, i);
+      cache_get(arc, i);
     }
     lines++;
     if (lines % 100000 == 0) {
