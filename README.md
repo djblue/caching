@@ -71,12 +71,12 @@ linked list.
 
 The following image summarizes the results from the lru simulation:
 
-<img src="plot.png" />
+<img src="plot-lru.png" />
 
 For all of the provided trace files, as the size of the cache increases, The hit
 rate also increases. However, it does so at a decreasing rate.
 
 ### ACR
 
-TODO...
+<img src="plot-arc.png" />
 
