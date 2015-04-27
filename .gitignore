@@ -1,3 +1,4 @@
 cacher
 *.o
 *.zip
+.~*
