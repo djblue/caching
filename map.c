@@ -31,6 +31,7 @@ void map_free(map *m) {
       temp = next;
     }
   }
+  free(m->b);
   free(m);
 }
 
