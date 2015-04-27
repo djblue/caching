@@ -21,7 +21,7 @@ parallel, do:
 
     make test -j
 
-The tests completed in about 2 minutes on `general.asu.edu`.
+The tests completed in about 4 minutes on `general.asu.edu`.
 
 ## Input
 
