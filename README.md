@@ -69,7 +69,7 @@ linear search time. To improves search, I used a map (implemented in
 `map.h` and `map.c`) to have practically constant time search of the
 linked list.
 
-The following image summarizes the results from the lru simulation:
+The following plot summarizes the results from the lru simulation:
 
 <img src="plot-lru.png" />
 
@@ -78,9 +78,26 @@ rate also increases. However, it does so at a decreasing rate.
 
 ### ARC
 
+To simulate the arc cache replacement policy, I used the same data
+structures as the lru. However, I used four lists (t1, t2, b1, b2) as
+described in the arc algorithm and two maps (pages, ghosts) to keep track
+of pages in the cache, and pages which are in the ghost cache. My
+implementation is exactly as described in the research paper.
+
+The following plot summarizes the results from the arc simulation:
+
 <img src="plot-arc.png" />
+
+Similar to lru, as the cache size increases, so does the hit rate. Again,
+it does so at a decreasing rate.
 
 ### Comparison
 
+After simulating both algorithms, I compared both algorithms hit rates and
+plotted the difference in the following graph.
+
 <img src="plot-vs.png" />
 
+Interestingly, as the cache size increases, the difference between both
+algorithms seems to decrease. This suggests that as the cache size
+increases arc and lru perform similarly.
