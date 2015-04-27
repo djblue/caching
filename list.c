@@ -36,15 +36,20 @@ void list_free (list *l) {
 page *list_remove (list *l, page *p) {
 
   // remove p from list
-  if (p == l->tail) {
-    l->tail = p->prev;
-    l->tail->next = NULL;
-  } else if (p == l->head) {
-    l->head = p->next;
-    l->head->prev = NULL;
+  if (l->size == 1) {
+    l->head = NULL;
+    l->tail = NULL;
   } else {
-    p->prev->next = p->next;
-    p->next->prev = p->prev;
+    if (l->tail == p) {
+      l->tail = p->prev;
+      l->tail->next = NULL;
+    } else if (l->head == p) {
+      l->head = p->next;
+      l->head->prev = NULL;
+    } else {
+      p->prev->next = p->next;
+      p->next->prev = p->prev;
+    }
   }
 
   p->l = NULL;
@@ -55,7 +60,11 @@ page *list_remove (list *l, page *p) {
 }
 
 page *list_pop_back (list *l) {
-  return list_remove(l, l->tail);
+  if (l->size == 0) {
+    return NULL;
+  } else {
+    return list_remove(l, l->tail);
+  }
 }
 
 void list_push_front (list *l, page *p) {
