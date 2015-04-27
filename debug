@@ -1,0 +1,2 @@
+file cacher
+run 1024 ./traces/P4.lis

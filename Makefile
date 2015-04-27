@@ -3,6 +3,7 @@ BIN=cacher
 SRC=$(wildcard *.c)
 OBJ=$(SRC:.c=.o)
 CFLAGS=-std=c99 -O3
+#CFLAGS=-std=c99 -g -Wall -O2
 LFLAGS=
 
 all: $(BIN)
