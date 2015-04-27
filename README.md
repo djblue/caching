@@ -80,3 +80,7 @@ rate also increases. However, it does so at a decreasing rate.
 
 <img src="plot-arc.png" />
 
+### Comparison
+
+<img src="plot-vs.png" />
+
