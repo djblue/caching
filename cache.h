@@ -11,14 +11,14 @@ typedef enum { LRU, ARC } cache_type;
 typedef struct {
   list *l;
   map *pages;
-  size_t capacity;
+  int capacity;
 } cache_lru;
 
 typedef struct {
   list *t1, *t2, *b1, *b2;
   map *ghosts, *pages;
-  int p;
-  size_t capacity;
+  double p;
+  int capacity;
 } cache_arc;
 
 typedef struct {
